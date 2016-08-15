@@ -32,23 +32,6 @@ TodoModel.prototype.addTodo = function (title) {
   });
   this.inform();
 };
-// Выбирает все элементы списка
-TodoModel.prototype.toggleAll = function (checked) {
-  this.todos = this.todos.map(function (todo) {
-    return Utils.extend({}, todo, {completed: checked});
-  });
-  this.inform();
-};
-
-// Выбор одного элемента
-TodoModel.prototype.toggle = function (todoToToggle) {
-  this.todos = this.todos.map(function (todo) {
-    return todo !== todoToToggle ?
-      todo :
-      Utils.extend({}, todo, {completed: !todo.completed});
-  });
-  this.inform();
-};
 // Удаляет элемент списка
 TodoModel.prototype.destroy = function (todo) {
   var answer = confirm('Delete item: "' + todo.title + '"?');
@@ -71,7 +54,11 @@ TodoModel.prototype.save = function (todoToSave, text, priority, state, deadline
     if (todo !== todoToSave) {
       return todo;
     } else {
-      return Utils.extend({}, todo, {title: text, priority: priority, state: state, deadline: deadline});
+      var completed = false;
+      if (state === 'Closed') {
+        completed = true;
+      }
+      return Utils.extend({}, todo, {title: text, priority: priority, state: state, deadline: deadline, completed: completed});
     }
   });
   this.inform();

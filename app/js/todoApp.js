@@ -27,13 +27,6 @@ var TodoApp = React.createClass({displayName: "TodoApp",
       this.setState({newTodo: ''});
     }
   },
-  toggleAll: function (event) {
-    var checked = event.target.checked;
-    this.props.model.toggleAll(checked);
-  },
-  toggle: function (todoToToggle) {
-    this.props.model.toggle(todoToToggle);
-  },
   destroy: function (todo) {
     this.props.model.destroy(todo);
   },
@@ -56,7 +49,6 @@ var TodoApp = React.createClass({displayName: "TodoApp",
         React.createElement(TodoItem, {
           key: todo.id, 
           todo: todo, 
-          onToggle: this.toggle.bind(this, todo), 
           onDestroy: this.destroy.bind(this, todo), 
           onEdit: this.edit.bind(this, todo), 
           editing: this.state.editing === todo.id, 
@@ -69,11 +61,6 @@ var TodoApp = React.createClass({displayName: "TodoApp",
     if (todos.length) {
       main = (
         React.createElement("section", {className: "main"}, 
-          React.createElement("input", {
-            className: "toggle-all", 
-            type: "checkbox", 
-            onChange: this.toggleAll}
-          ), 
           React.createElement("ul", {className: "todo-list"}, 
             todoItems
           )

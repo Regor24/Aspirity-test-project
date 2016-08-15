@@ -81,28 +81,15 @@ TodoModel.prototype.addTodo = function (title) {
   });
   this.inform();
 };
-// Выбирает все элементы списка
-TodoModel.prototype.toggleAll = function (checked) {
-  this.todos = this.todos.map(function (todo) {
-    return Utils.extend({}, todo, {completed: checked});
-  });
-  this.inform();
-};
-
-// Выбор одного элемента
-TodoModel.prototype.toggle = function (todoToToggle) {
-  this.todos = this.todos.map(function (todo) {
-    return todo !== todoToToggle ?
-      todo :
-      Utils.extend({}, todo, {completed: !todo.completed});
-  });
-  this.inform();
-};
 // Удаляет элемент списка
 TodoModel.prototype.destroy = function (todo) {
+  var answer = confirm('Delete item: "' + todo.title + '"?');
+  if (!answer) {
+    return;
+  }
   this.todos = this.todos.filter(function (candidate) {
     return candidate !== todo;
-  });
+  }); 
   this.inform();
 };
 
@@ -116,7 +103,11 @@ TodoModel.prototype.save = function (todoToSave, text, priority, state, deadline
     if (todo !== todoToSave) {
       return todo;
     } else {
-      return Utils.extend({}, todo, {title: text, priority: priority, state: state, deadline: deadline});
+      var completed = false;
+      if (state === 'Closed') {
+        completed = true;
+      }
+      return Utils.extend({}, todo, {title: text, priority: priority, state: state, deadline: deadline, completed: completed});
     }
   });
   this.inform();
@@ -186,6 +177,7 @@ var TodoItem = React.createClass({displayName: "TodoItem",
         this.handleSubmit();
     });
   },
+
   handleDateChange: function(event) {
     this.setState({
       deadline: event.target.value
@@ -212,8 +204,8 @@ var TodoItem = React.createClass({displayName: "TodoItem",
           React.createElement("input", {
             className: "toggle", 
             type: "checkbox", 
-            checked: this.props.todo.completed, 
-            onChange: this.props.onToggle}
+            checked: this.props.todo.completed}
+            // onChange={this.props.onToggle}
           ), 
           React.createElement("label", {onDoubleClick: this.handleEdit}, 
             this.props.todo.title
@@ -292,13 +284,6 @@ var TodoApp = React.createClass({displayName: "TodoApp",
       this.setState({newTodo: ''});
     }
   },
-  toggleAll: function (event) {
-    var checked = event.target.checked;
-    this.props.model.toggleAll(checked);
-  },
-  toggle: function (todoToToggle) {
-    this.props.model.toggle(todoToToggle);
-  },
   destroy: function (todo) {
     this.props.model.destroy(todo);
   },
@@ -321,7 +306,6 @@ var TodoApp = React.createClass({displayName: "TodoApp",
         React.createElement(TodoItem, {
           key: todo.id, 
           todo: todo, 
-          onToggle: this.toggle.bind(this, todo), 
           onDestroy: this.destroy.bind(this, todo), 
           onEdit: this.edit.bind(this, todo), 
           editing: this.state.editing === todo.id, 
@@ -334,11 +318,6 @@ var TodoApp = React.createClass({displayName: "TodoApp",
     if (todos.length) {
       main = (
         React.createElement("section", {className: "main"}, 
-          React.createElement("input", {
-            className: "toggle-all", 
-            type: "checkbox", 
-            onChange: this.toggleAll}
-          ), 
           React.createElement("ul", {className: "todo-list"}, 
             todoItems
           )

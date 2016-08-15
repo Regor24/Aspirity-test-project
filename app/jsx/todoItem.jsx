@@ -63,6 +63,7 @@ var TodoItem = React.createClass({
         this.handleSubmit();
     });
   },
+
   handleDateChange: function(event) {
     this.setState({
       deadline: event.target.value
@@ -90,7 +91,7 @@ var TodoItem = React.createClass({
             className="toggle"
             type="checkbox"
             checked={this.props.todo.completed}
-            onChange={this.props.onToggle}
+            // onChange={this.props.onToggle}
           />
           <label onDoubleClick={this.handleEdit}>
             {this.props.todo.title}
