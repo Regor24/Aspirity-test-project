@@ -100,9 +100,13 @@ TodoModel.prototype.toggle = function (todoToToggle) {
 };
 // Удаляет элемент списка
 TodoModel.prototype.destroy = function (todo) {
+  var answer = confirm('Delete item: "' + todo.title + '"?');
+  if (!answer) {
+    return;
+  }
   this.todos = this.todos.filter(function (candidate) {
     return candidate !== todo;
-  });
+  }); 
   this.inform();
 };
 

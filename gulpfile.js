@@ -2,6 +2,7 @@ var gulp = require('gulp');
 var react = require('gulp-react');
 var gulpSequence = require('gulp-sequence');
 var concat = require('gulp-concat');
+var watch = require('gulp-watch');
 
 gulp.task('react', function () {
   return gulp.src('app/jsx/*.jsx')
@@ -35,5 +36,10 @@ gulp.task('build',
 );
 
 gulp.task('default',
-  gulpSequence('react', 'concat')
+  gulpSequence('watch')
 );
+
+gulp.task('watch', function() {
+  gulp.watch('app/jsx/*.jsx', ['react', 'concat']); 
+  gulp.watch('app/js/*.js', ['concat']);   
+});
