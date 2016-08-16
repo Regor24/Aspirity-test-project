@@ -87,44 +87,50 @@ var TodoItem = React.createClass({displayName: "TodoItem",
 					editing: this.props.editing
 				})}, 
         React.createElement("div", {className: "view"}, 
-          React.createElement("input", {
-            className: "toggle", 
-            type: "checkbox", 
-            checked: this.props.todo.completed}
-            // onChange={this.props.onToggle}
+          React.createElement("div", {className: "view-header"}, 
+            React.createElement("input", {
+              className: "toggle", 
+              type: "checkbox", 
+              checked: this.props.todo.completed}
+            ), 
+            React.createElement("span", null), 
+            React.createElement("label", {onClick: this.handleEdit}, 
+              this.props.todo.title
+            )
           ), 
-          React.createElement("label", {onDoubleClick: this.handleEdit}, 
-            this.props.todo.title
+          React.createElement("div", {className: "view-sub-props"}, 
+            React.createElement("span", null, "Priority:"), 
+            React.createElement("select", {
+              onChange: this.handleSelPriorityChange, 
+              value: this.state.selectPriority, 
+              ref: "selectingComponent"
+              }, 
+              React.createElement("option", {value: "High"}, "High"), 
+              React.createElement("option", {value: "Middle"}, "Middle"), 
+              React.createElement("option", {value: "Low"}, "Low")
+            )
           ), 
-          React.createElement("span", {className: "view-sub-label"}, "Priority:"), 
-          React.createElement("select", {
-            className: "view-sub-property", 
-            onChange: this.handleSelPriorityChange, 
-            value: this.state.selectPriority, 
-            ref: "selectingComponent"
-            }, 
-            React.createElement("option", {value: "High"}, "High"), 
-            React.createElement("option", {value: "Middle"}, "Middle"), 
-            React.createElement("option", {value: "Low"}, "Low")
+          React.createElement("div", {className: "view-sub-props"}, 
+            React.createElement("span", null, "State:"), 
+            React.createElement("select", {
+              onChange: this.handleSelStateChange, 
+              value: this.state.selectState
+              }, 
+              React.createElement("option", {value: "New"}, "New"), 
+              React.createElement("option", {value: "Active"}, "Active"), 
+              React.createElement("option", {value: "Resolved"}, "Resolved"), 
+              React.createElement("option", {value: "Closed"}, "Closed")
+            )
           ), 
-          React.createElement("span", {className: "view-sub-label"}, "State:"), 
-          React.createElement("select", {
-            className: "view-sub-property", 
-            onChange: this.handleSelStateChange, 
-            value: this.state.selectState
-            }, 
-            React.createElement("option", {value: "New"}, "New"), 
-            React.createElement("option", {value: "Active"}, "Active"), 
-            React.createElement("option", {value: "Resolved"}, "Resolved"), 
-            React.createElement("option", {value: "Closed"}, "Closed")
-          ), 
-          React.createElement("span", {className: "view-sub-label"}, "Deadline:"), 
-          React.createElement("input", {
-            className: "view-sub-date", 
-            type: "date", 
-            min: new Date().toISOString().split('T')[0], 
-            value: this.state.deadline, 
-            onChange: this.handleDateChange}
+          React.createElement("div", {className: "view-sub-props"}, 
+            React.createElement("span", null, "Deadline:"), 
+            React.createElement("input", {
+              className: "view-sub-date", 
+              type: "date", 
+              min: new Date().toISOString().split('T')[0], 
+              value: this.state.deadline, 
+              onChange: this.handleDateChange}
+            )
           ), 
           React.createElement("button", {className: "destroy", onClick: this.props.onDestroy})
         ), 

@@ -72,16 +72,24 @@ input[type="checkbox"] {
 
 .todoapp h1 {
 	position: absolute;
-	top: -250px;
+	top: -150px;
 	width: 100%;
-	font-size: 100px;
-	line-height: 80px;
+	font-size: 45px;
+	line-height: 50px;
 	font-weight: 100;
 	text-align: center;
 	color: rgba(175, 47, 47, 0.15);
 	-webkit-text-rendering: optimizeLegibility;
 	-moz-text-rendering: optimizeLegibility;
 	text-rendering: optimizeLegibility;
+}
+
+@media screen and (min-width: 768px){
+	.todoapp h1{
+	font-size: 100px;
+	line-height: 80px;
+	top: -250px;
+	}	
 }
 
 .new-todo,
@@ -122,27 +130,6 @@ label[for='toggle-all'] {
 	display: none;
 }
 
-.toggle-all {
-	position: absolute;
-	top: -55px;
-	left: -12px;
-	width: 60px;
-	height: 34px;
-	text-align: center;
-	border: none; /* Mobile Safari */
-}
-
-.toggle-all:before {
-	content: '❯';
-	font-size: 22px;
-	color: #e6e6e6;
-	padding: 10px 27px 10px 27px;
-}
-
-.toggle-all:checked:before {
-	color: #737373;
-}
-
 .todo-list {
 	margin: 0;
 	padding: 0;
@@ -174,28 +161,50 @@ label[for='toggle-all'] {
 .todo-list li.editing .view {
 	display: none;
 }
-
+/*
 .todo-list li .toggle {
 	text-align: center;
 	width: 40px;
 	height: auto;
 	position: absolute;
-	top: -18px;
+	top: 50%;
 	bottom: 0;
-	margin: auto 0;
+	margin-top: -20px;
 	border: none; 
 	-webkit-appearance: none;
+	-moz-appearance: none;
 	appearance: none;
 }
 
 .todo-list li .toggle:checked:after {
 	content: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="40" height="40" viewBox="-10 -18 100 135"><path fill="#5dc2af" d="M72 25L42 71 27 56l-4 4 20 20 34-52z"/></svg>');
+}*/
+
+.todo-list li .toggle {
+	display: none;
 }
+
+.todo-list li .view-header span{
+	display: block;
+	text-align: center;
+	width: 40px;
+	height: auto;
+	position: absolute;
+	top: 50%;
+	bottom: 0;
+	margin-top: -20px;
+	border: none; 
+}
+
+.todo-list li .toggle:checked + span:after {
+	content: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="40" height="40" viewBox="-10 -18 100 135"><path fill="#5dc2af" d="M72 25L42 71 27 56l-4 4 20 20 34-52z"/></svg>');
+}
+
 
 .todo-list li label {
 	white-space: pre-line;
 	word-break: break-all;
-	padding: 15px 60px 15px 15px;
+	padding: 15px 60px 15px 0px;
 	margin-left: 45px;
 	display: block;
 	line-height: 1.2;
@@ -208,7 +217,7 @@ label[for='toggle-all'] {
 }
 
 .todo-list li .destroy {
-	display: none;
+	display: block;
 	position: absolute;
 	top: 50%;
 	right: 0;
@@ -229,6 +238,12 @@ label[for='toggle-all'] {
 	content: '×';
 }
 
+@media screen and (min-width: 768px){
+	.todo-list li .destroy {
+		display: none;
+	}
+}
+
 .todo-list li:hover .destroy {
 	display: block;
 }
@@ -241,27 +256,38 @@ label[for='toggle-all'] {
 	margin-bottom: -1px;
 }
 
-.view-sub-label{
+/*********************************************/
+.view-sub-props{
+	display: inline-block;
+	margin: 0px 0px 0px 10px;
+}
+
+.view-sub-props span{
   display: inline-block;
-  margin-left: 10px;
   font-size: 14px;
   color: #d9d9d9;
 }
 
-.view-sub-property{
+.view-sub-props select{
   display: inline-block;
   font-size: 14px;
   color: #656565;
   border: 0;
 }
 
-.view-sub-date{
+.view-sub-props .view-sub-date{
   display: inline-block;
   font-size: 14px;
   padding-left: 5px;
   color: #656565;
   border: 0;
 }
+
+.view-header{
+	position: relative;
+}
+
+/*********************************************/
 
 @media screen and (-webkit-min-device-pixel-ratio:0) {
 	.toggle-all,

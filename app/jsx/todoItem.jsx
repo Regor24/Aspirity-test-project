@@ -87,45 +87,51 @@ var TodoItem = React.createClass({
 					editing: this.props.editing
 				})}>
         <div className="view">
-          <input
-            className="toggle"
-            type="checkbox"
-            checked={this.props.todo.completed}
-            // onChange={this.props.onToggle}
-          />
-          <label onDoubleClick={this.handleEdit}>
-            {this.props.todo.title}
-          </label>
-          <span className="view-sub-label">Priority:</span>
-          <select 
-            className="view-sub-property"
-            onChange={this.handleSelPriorityChange}
-            value={this.state.selectPriority}
-            ref="selectingComponent"
-            >
-            <option value="High">High</option>
-            <option value="Middle">Middle</option>
-            <option value="Low">Low</option>
-          </select>
-          <span className="view-sub-label">State:</span>
-          <select 
-            className="view-sub-property"
-            onChange={this.handleSelStateChange}
-            value={this.state.selectState}
-            >
-            <option value="New">New</option>
-            <option value="Active">Active</option>
-            <option value="Resolved">Resolved</option>
-            <option value="Closed">Closed</option>
-          </select>
-          <span className="view-sub-label">Deadline:</span>
-          <input 
-            className="view-sub-date"
-            type="date"
-            min={new Date().toISOString().split('T')[0]}
-            value={this.state.deadline}
-            onChange={this.handleDateChange}
-          />
+          <div className="view-header">
+            <input
+              className="toggle"
+              type="checkbox"
+              checked={this.props.todo.completed}
+            />
+            <span></span>
+            <label onClick={this.handleEdit}>
+              {this.props.todo.title}
+            </label>
+          </div>
+          <div className="view-sub-props">
+            <span>Priority:</span>
+            <select 
+              onChange={this.handleSelPriorityChange}
+              value={this.state.selectPriority}
+              ref="selectingComponent"
+              >
+              <option value="High">High</option>
+              <option value="Middle">Middle</option>
+              <option value="Low">Low</option>
+            </select>
+          </div>
+          <div className="view-sub-props">
+            <span>State:</span>
+            <select 
+              onChange={this.handleSelStateChange}
+              value={this.state.selectState}
+              >
+              <option value="New">New</option>
+              <option value="Active">Active</option>
+              <option value="Resolved">Resolved</option>
+              <option value="Closed">Closed</option>
+            </select>
+          </div>  
+          <div className="view-sub-props">
+            <span>Deadline:</span>
+            <input 
+              className="view-sub-date"
+              type="date"
+              min={new Date().toISOString().split('T')[0]}
+              value={this.state.deadline}
+              onChange={this.handleDateChange}
+            />
+          </div>   
           <button className="destroy" onClick={this.props.onDestroy} />
         </div>
         <input
